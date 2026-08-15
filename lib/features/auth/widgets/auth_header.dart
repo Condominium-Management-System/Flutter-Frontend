@@ -40,7 +40,7 @@ class AuthHeader extends StatelessWidget {
         const SizedBox(height: 16),
         // App Name
         Text(
-          'YE KONDOMINIUM',
+          'HomeAxis',
           style: GoogleFonts.inter(
             fontSize: 28,
             fontWeight: FontWeight.bold,
