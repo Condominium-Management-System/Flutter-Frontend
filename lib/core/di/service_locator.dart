@@ -1,7 +1,3 @@
-// ============================================
-// FILE: lib/core/di/service_locator.dart
-// PURPOSE: Service locator for dependency injection
-// ============================================
 
 // ignore_for_file: unnecessary_import
 
