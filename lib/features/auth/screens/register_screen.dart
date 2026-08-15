@@ -1,10 +1,8 @@
 
-
-// ignore_for_file: prefer_const_constructors, unused_field, prefer_final_fields, unused_import
+// ignore_for_file: unused_import
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:home_axis/features/auth/widgets/condo_code_field.dart';
 import '../cubits/register_cubit.dart';
 import '../cubits/register_state.dart';
 import '../widgets/auth_header.dart';
@@ -37,8 +35,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
   final _fanController = TextEditingController();
-  final _condoCodeController = TextEditingController(); 
-  bool _isPasswordVisible = false;
+  final _condoCodeController = TextEditingController();
 
   @override
   void dispose() {
@@ -60,7 +57,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           AuthSuccessDialog.show(
             context,
             title: 'Registration Successful!',
-            message: 'Welcome to YE KONDOMINIUM. Please login to continue.',
+            message: 'Welcome to HomeAxis. Please login to continue.',
             buttonText: 'Login',
             onButtonPressed: () {
               Navigator.pushNamedAndRemoveUntil(
@@ -72,23 +69,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
           );
           context.read<RegisterCubit>().reset();
         }
+        if (state is RegisterError) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(state.message ?? 'An error occurred'),
+              backgroundColor: AppColors.errorRed,
+            ),
+          );
+        }
       },
       builder: (context, state) {
         if (state is RegisterLoading) {
           return Scaffold(
             body: const AuthLoadingIndicator(
               message: 'Creating your account...',
-            ),
-          );
-        }
-
-        if (state is RegisterError) {
-          return Scaffold(
-            body: AuthErrorWidget(
-              message: state.message ?? 'An error occurred',
-              onRetry: () {
-                context.read<RegisterCubit>().clearError();
-              },
             ),
           );
         }
@@ -113,6 +107,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const SizedBox(height: 20),
                     const AuthHeader(),
                     const SizedBox(height: 24),
+
                     // Full Name
                     NameField(
                       controller: _nameController,
@@ -120,6 +115,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       hintText: 'Enter your full name',
                     ),
                     const SizedBox(height: 16),
+
                     // Email
                     EmailField(
                       controller: _emailController,
@@ -127,6 +123,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       hintText: 'Enter your email address',
                     ),
                     const SizedBox(height: 16),
+
                     // Phone
                     PhoneField(
                       controller: _phoneController,
@@ -134,6 +131,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       hintText: 'Enter your phone number',
                     ),
                     const SizedBox(height: 16),
+
                     // Password
                     PasswordField(
                       controller: _passwordController,
@@ -158,6 +156,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                     ],
                     const SizedBox(height: 16),
+
                     // Confirm Password
                     PasswordField(
                       controller: _confirmPasswordController,
@@ -167,34 +166,55 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       passwordToMatch: _passwordController.text,
                     ),
                     const SizedBox(height: 16),
+
                     // FAN Number
                     FANField(
                       controller: _fanController,
                       label: 'FAN Number',
                       hintText: 'Enter your FAN number',
                     ),
+                    const SizedBox(height: 16),
+
                     // Condo Code
-                    CondoCodeField(
-                      controller: _condoCodeController,
-                    ),
+                    _buildCondoCodeField(),
                     const SizedBox(height: 24),
+
                     // Register Button
                     SizedBox(
                       width: double.infinity,
                       height: 56,
                       child: ElevatedButton(
-                        onPressed: _handleRegister,
-                        child: Text(
-                          'CREATE ACCOUNT',
-                          style: GoogleFonts.inter(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                            letterSpacing: 1.5,
+                        onPressed: state is RegisterLoading ? null : _handleRegister,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primaryGold,
+                          foregroundColor: AppColors.primaryBlack,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
                           ),
                         ),
+                        child: state is RegisterLoading
+                            ? SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 3,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    AppColors.primaryBlack,
+                                  ),
+                                ),
+                              )
+                            : Text(
+                                'CREATE ACCOUNT',
+                                style: GoogleFonts.inter(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 1.5,
+                                ),
+                              ),
                       ),
                     ),
                     const SizedBox(height: 16),
+
                     // Login Link
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -239,6 +259,78 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
+  Widget _buildCondoCodeField() {
+    return TextFormField(
+      controller: _condoCodeController,
+      keyboardType: TextInputType.text,
+      textInputAction: TextInputAction.done,
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return 'Condominium code is required';
+        }
+        if (value.length < 5) {
+          return 'Please enter a valid condominium code';
+        }
+        return null;
+      },
+      style: TextStyle(
+        color: AppColors.textWhite,
+        fontSize: 16,
+      ),
+      decoration: InputDecoration(
+        labelText: 'Condominium Code',
+        hintText: 'Enter your condo code (e.g., YEKONDO-001)',
+        hintStyle: TextStyle(
+          color: AppColors.textDark,
+          fontSize: 16,
+        ),
+        prefixIcon: Icon(
+          Icons.apartment,
+          color: AppColors.primaryGold,
+          size: 24,
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(
+            color: AppColors.primaryGold.withOpacity(0.3),
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(
+            color: AppColors.primaryGold,
+            width: 2,
+          ),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(
+            color: AppColors.errorRed,
+            width: 2,
+          ),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: const BorderSide(
+            color: AppColors.errorRed,
+            width: 2,
+          ),
+        ),
+        filled: true,
+        fillColor: AppColors.inputBackground,
+        contentPadding: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 16,
+        ),
+        helperText: 'Ask your condo admin for the correct code',
+        helperStyle: TextStyle(
+          color: AppColors.textDark,
+          fontSize: 12,
+        ),
+      ),
+    );
+  }
+
   void _handleRegister() {
     if (_formKey.currentState?.validate() ?? false) {
       context.read<RegisterCubit>().register(
@@ -247,10 +339,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             phoneNumber: _phoneController.text.trim(),
             fan: _fanController.text.trim(),
             password: _passwordController.text.trim(),
-            condoCode: _condoCodeController.text.trim(), // Should be dynamic from user input
+            condoCode: _condoCodeController.text.trim(),
           );
     }
   }
 }
-
-
