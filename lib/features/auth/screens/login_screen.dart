@@ -1,3 +1,4 @@
+// lib/features/auth/screens/login_screen.dart
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,7 @@ import '../widgets/remember_me_checkbox.dart';
 import '../widgets/auth_loading_indicator.dart';
 import '../widgets/auth_error_widget.dart';
 import '../config/auth_routes.dart';
+import '../../resident/config/resident_routes.dart';  
 import '../../../shared/theme/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -31,7 +33,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    // Load saved credentials
     context.read<LoginCubit>().loadSavedCredentials();
   }
 
@@ -47,7 +48,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocConsumer<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginSuccess) {
-          Navigator.pushReplacementNamed(context, '/home');
+          Navigator.pushReplacementNamed(context, ResidentRoutes.home);
         } else if (state is LoginRememberMeLoaded) {
           _emailController.text = state.email;
           _passwordController.text = state.password;
@@ -81,10 +82,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   children: [
                     const SizedBox(height: 40),
-                    // Header
                     const AuthHeader(subtitle: 'Sign in to continue'),
                     const SizedBox(height: 40),
-                    // Email Field
                     EmailField(
                       controller: _emailController,
                       label: 'Email or Phone Number',
@@ -92,7 +91,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       enabled: state is! LoginLoading,
                     ),
                     const SizedBox(height: 16),
-                    // Password Field
                     PasswordField(
                       controller: _passwordController,
                       label: 'Password',
@@ -100,7 +98,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       enabled: state is! LoginLoading,
                     ),
                     const SizedBox(height: 12),
-                    // Remember Me & Forgot Password Row
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -120,14 +117,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     const SizedBox(height: 32),
-                    // Login Button
                     SizedBox(
                       width: double.infinity,
                       height: 56,
                       child: ElevatedButton(
-                        onPressed: state is LoginLoading
-                            ? null
-                            : _handleLogin,
+                        onPressed: state is LoginLoading ? null : _handleLogin,
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.primaryGold,
                           foregroundColor: AppColors.primaryBlack,
@@ -157,10 +151,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                     const SizedBox(height: 24),
-                    // Social Login
                     const SocialLoginButtons(),
                     const SizedBox(height: 24),
-                    // Register Link
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -187,7 +179,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     const SizedBox(height: 16),
-                    // Footer
                     Text(
                       'Terms of Service  |  Privacy Policy',
                       style: TextStyle(
