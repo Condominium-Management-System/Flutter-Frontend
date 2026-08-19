@@ -13,7 +13,7 @@ import '../../widgets/reports/report_card.dart';
 import '../../widgets/common/gold_button.dart';
 import '../../../../shared/theme/colors.dart';
 import 'report_detail_screen.dart';
-import 'create _report_screen.dart';
+import 'create_report_screen.dart';
 
 class ReportListScreen extends StatefulWidget {
   const ReportListScreen({super.key});

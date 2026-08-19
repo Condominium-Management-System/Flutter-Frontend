@@ -1,5 +1,3 @@
-// ignore_for_file: file_names, unused_import
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +8,6 @@ import '../../widgets/common/gold_button.dart';
 import '../../widgets/common/gold_text_field.dart';
 import '../../widgets/common/loading_indicator.dart';
 import '../../widgets/common/success_dialog.dart';
-import '../../widgets/common/error_widget.dart';
 import '../../widgets/reports/report_category_selector.dart';
 import '../../widgets/reports/report_priority_selector.dart';
 import '../../widgets/reports/report_photo_picker.dart';
