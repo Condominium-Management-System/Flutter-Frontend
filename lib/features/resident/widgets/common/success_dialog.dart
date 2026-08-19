@@ -1,0 +1,96 @@
+
+import 'package:flutter/material.dart';
+import '../../../../shared/theme/colors.dart';
+import 'gold_button.dart';
+
+class SuccessDialog extends StatelessWidget {
+  final String title;
+  final String message;
+  final String? buttonText;
+  final VoidCallback? onButtonPressed;
+
+  const SuccessDialog({
+    super.key,
+    required this.title,
+    required this.message,
+    this.buttonText,
+    this.onButtonPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: AppColors.secondaryBlack,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              width: 64,
+              height: 64,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.successGreen.withOpacity(0.1),
+              ),
+              child: Icon(
+                Icons.check_circle,
+                color: AppColors.successGreen,
+                size: 40,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Text(
+              title,
+              style: TextStyle(
+                color: AppColors.textWhite,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.textGray,
+                fontSize: 14,
+              ),
+            ),
+            if (buttonText != null) ...[
+              const SizedBox(height: 24),
+              GoldButton(
+                text: buttonText!,
+                variant: ButtonVariant.primary,
+                size: ButtonSize.medium,
+                onPressed: onButtonPressed ?? () => Navigator.pop(context),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+
+  static Future<void> show(
+    BuildContext context, {
+    required String title,
+    required String message,
+    String? buttonText,
+    VoidCallback? onButtonPressed,
+  }) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => SuccessDialog(
+        title: title,
+        message: message,
+        buttonText: buttonText ?? 'Continue',
+        onButtonPressed: onButtonPressed,
+      ),
+    );
+  }
+}
