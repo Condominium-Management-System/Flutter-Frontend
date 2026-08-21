@@ -1,6 +1,4 @@
 
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/auth_bloc.dart';
@@ -8,6 +6,8 @@ import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
 import '../../../shared/theme/colors.dart';
 import '../config/auth_routes.dart';
+import '../../resident/config/resident_routes.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -33,11 +33,10 @@ class _SplashScreenState extends State<SplashScreen> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthAuthenticated) {
-          Navigator.pushReplacementNamed(context, '/home');
+          Navigator.pushReplacementNamed(context, ResidentRoutes.home);
         } else if (state is AuthUnauthenticated) {
           Navigator.pushReplacementNamed(context, AuthRoutes.login);
         } else if (state is AuthError) {
-          // If error, go to login
           Navigator.pushReplacementNamed(context, AuthRoutes.login);
         }
       },
@@ -76,8 +75,8 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'YE KONDOMINIUM',
-                  style: TextStyle(
+                  'HomeAxis',  
+                  style: GoogleFonts.inter(
                     color: AppColors.primaryGold,
                     fontSize: 28,
                     fontWeight: FontWeight.bold,
@@ -87,7 +86,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 const SizedBox(height: 8),
                 Text(
                   'Smart Living, Golden Standards',
-                  style: TextStyle(
+                  style: GoogleFonts.inter(
                     color: AppColors.textGray,
                     fontSize: 14,
                   ),

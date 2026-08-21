@@ -18,9 +18,10 @@ class SocialLoginButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Column(
       children: [
-        // Divider
         Row(
           children: [
             Expanded(
@@ -34,7 +35,7 @@ class SocialLoginButtons extends StatelessWidget {
               child: Text(
                 'Or continue with',
                 style: TextStyle(
-                  color: AppColors.textGray,
+                  color: isDark ? AppColors.textGray : AppColors.textSecondaryLight,
                   fontSize: 13,
                 ),
               ),
@@ -48,7 +49,6 @@ class SocialLoginButtons extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 24),
-        // Social Buttons Row
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -56,18 +56,21 @@ class SocialLoginButtons extends StatelessWidget {
               icon: Icons.g_mobiledata,
               label: 'Google',
               onTap: onGoogleTap,
+              isDark: isDark,
             ),
             const SizedBox(width: 16),
             _buildSocialButton(
               icon: Icons.apple,
               label: 'Apple',
               onTap: onAppleTap,
+              isDark: isDark,
             ),
             const SizedBox(width: 16),
             _buildSocialButton(
               icon: Icons.phone_android_outlined,
               label: 'Other',
               onTap: onOtherTap,
+              isDark: isDark,
             ),
           ],
         ),
@@ -79,6 +82,7 @@ class SocialLoginButtons extends StatelessWidget {
     required IconData icon,
     required String label,
     VoidCallback? onTap,
+    required bool isDark,
   }) {
     return Column(
       children: [
@@ -94,11 +98,11 @@ class SocialLoginButtons extends StatelessWidget {
                 color: AppColors.primaryGold,
                 width: 1.5,
               ),
-              color: AppColors.secondaryBlack,
+              color: isDark ? AppColors.secondaryBlack : AppColors.secondaryLight,
             ),
             child: Icon(
               icon,
-              color: label == 'Other' ? AppColors.primaryGold : AppColors.textWhite,
+              color: label == 'Other' ? AppColors.primaryGold : (isDark ? AppColors.textWhite : AppColors.textPrimaryLight),
               size: 28,
             ),
           ),
@@ -107,7 +111,7 @@ class SocialLoginButtons extends StatelessWidget {
         Text(
           label,
           style: TextStyle(
-            color: AppColors.textGray,
+            color: isDark ? AppColors.textGray : AppColors.textSecondaryLight,
             fontSize: 11,
           ),
         ),

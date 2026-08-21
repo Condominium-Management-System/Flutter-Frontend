@@ -39,6 +39,8 @@ class _PasswordFieldState extends State<PasswordField> {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return TextFormField(
       controller: widget.controller,
       initialValue: widget.controller == null ? widget.initialValue : null,
@@ -63,7 +65,9 @@ class _PasswordFieldState extends State<PasswordField> {
         return PasswordValidator.validate(value);
       },
       style: TextStyle(
-        color: widget.enabled ? AppColors.textWhite : AppColors.textDark,
+        color: widget.enabled
+            ? (isDark ? AppColors.textWhite : AppColors.textPrimaryLight)
+            : AppColors.textSecondaryLight,
         fontSize: 16,
       ),
       decoration: InputDecoration(
@@ -74,7 +78,7 @@ class _PasswordFieldState extends State<PasswordField> {
                 ? 'Confirm your password'
                 : 'Enter your password'),
         hintStyle: TextStyle(
-          color: AppColors.textDark,
+          color: isDark ? AppColors.textDark : AppColors.textSecondaryLight,
           fontSize: 16,
         ),
         prefixIcon: Icon(
@@ -122,7 +126,9 @@ class _PasswordFieldState extends State<PasswordField> {
           ),
         ),
         filled: true,
-        fillColor: widget.enabled ? AppColors.inputBackground : AppColors.secondaryBlack,
+        fillColor: widget.enabled
+            ? (isDark ? AppColors.inputBackground : AppColors.inputBackgroundLight)
+            : AppColors.secondaryLight,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 16,

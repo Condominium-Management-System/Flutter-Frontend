@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import '../../../shared/theme/colors.dart';
+import '../../../shared/theme/theme_colors.dart';
 
 class AuthErrorWidget extends StatelessWidget {
   final String message;
@@ -31,7 +32,7 @@ class AuthErrorWidget extends StatelessWidget {
             Text(
               'Error',
               style: TextStyle(
-                color: AppColors.textWhite,
+                color: ThemeColors.titleColor(context),
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -41,7 +42,7 @@ class AuthErrorWidget extends StatelessWidget {
               message,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: AppColors.textGray,
+                color: ThemeColors.bodyColor(context),
                 fontSize: 14,
               ),
             ),
@@ -50,8 +51,8 @@ class AuthErrorWidget extends StatelessWidget {
               ElevatedButton(
                 onPressed: onRetry,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primaryGold,
-                  foregroundColor: AppColors.primaryBlack,
+                  backgroundColor: ThemeColors.primaryButtonBg(context),
+                  foregroundColor: ThemeColors.primaryButtonFg(context),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 32,
                     vertical: 12,

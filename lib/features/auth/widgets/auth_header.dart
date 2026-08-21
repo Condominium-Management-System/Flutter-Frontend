@@ -56,7 +56,9 @@ class AuthHeader extends StatelessWidget {
             style: GoogleFonts.inter(
               fontSize: 14,
               fontWeight: FontWeight.normal,
-              color: AppColors.textGray,
+              color: Theme.of(context).brightness == Brightness.dark
+                  ? AppColors.textGray
+                  : AppColors.textSecondaryLight,
             ),
           ),
         ],

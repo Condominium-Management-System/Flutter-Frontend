@@ -182,7 +182,7 @@ class AuthRepository {
   }
 
   // VALIDATION HELPERS
-  bool isTokenExpired() {
-    return _tokenService.isTokenExpired();
+  Future<bool> isTokenExpired() async {
+    return await _tokenService.isTokenExpired();
   }
 }

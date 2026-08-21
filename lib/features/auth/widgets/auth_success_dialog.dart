@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import '../../../shared/theme/colors.dart';
+import '../../../shared/theme/theme_colors.dart';
 
 class AuthSuccessDialog extends StatelessWidget {
   final String title;
@@ -19,7 +20,7 @@ class AuthSuccessDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: AppColors.secondaryBlack,
+      backgroundColor: ThemeColors.dialogBackground(context),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
@@ -45,7 +46,7 @@ class AuthSuccessDialog extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                color: AppColors.textWhite,
+                color: ThemeColors.titleColor(context),
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
@@ -55,7 +56,7 @@ class AuthSuccessDialog extends StatelessWidget {
               message,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: AppColors.textGray,
+                color: ThemeColors.bodyColor(context),
                 fontSize: 14,
               ),
             ),
@@ -66,8 +67,8 @@ class AuthSuccessDialog extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: onButtonPressed ?? () => Navigator.pop(context),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primaryGold,
-                    foregroundColor: AppColors.primaryBlack,
+                    backgroundColor: ThemeColors.primaryButtonBg(context),
+                    foregroundColor: ThemeColors.primaryButtonFg(context),
                     padding: const EdgeInsets.symmetric(vertical: 12),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),

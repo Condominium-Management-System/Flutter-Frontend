@@ -16,6 +16,8 @@ class RememberMeCheckbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Row(
       children: [
         Checkbox(
@@ -34,7 +36,7 @@ class RememberMeCheckbox extends StatelessWidget {
         Text(
           'Remember Me',
           style: TextStyle(
-            color: AppColors.textWhite,
+            color: isDark ? AppColors.textWhite : AppColors.textPrimaryLight,
             fontSize: 13,
           ),
         ),

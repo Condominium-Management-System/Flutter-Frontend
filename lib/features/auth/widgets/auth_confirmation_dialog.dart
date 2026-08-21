@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import '../../../shared/theme/colors.dart';
+import '../../../shared/theme/theme_colors.dart';
 
 class AuthConfirmationDialog extends StatelessWidget {
   final String title;
@@ -25,7 +26,7 @@ class AuthConfirmationDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: AppColors.secondaryBlack,
+      backgroundColor: ThemeColors.dialogBackground(context),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
@@ -53,7 +54,7 @@ class AuthConfirmationDialog extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                color: AppColors.textWhite,
+                color: ThemeColors.titleColor(context),
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
               ),
@@ -63,7 +64,7 @@ class AuthConfirmationDialog extends StatelessWidget {
               message,
               textAlign: TextAlign.center,
               style: TextStyle(
-                color: AppColors.textGray,
+                color: ThemeColors.bodyColor(context),
                 fontSize: 14,
               ),
             ),
@@ -74,7 +75,7 @@ class AuthConfirmationDialog extends StatelessWidget {
                   child: OutlinedButton(
                     onPressed: () => Navigator.pop(context),
                     style: OutlinedButton.styleFrom(
-                      foregroundColor: AppColors.textGray,
+                      foregroundColor: ThemeColors.bodyColor(context),
                       side: BorderSide(
                         color: AppColors.textDark,
                       ),
@@ -94,8 +95,8 @@ class AuthConfirmationDialog extends StatelessWidget {
                       onConfirm();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: isDanger ? AppColors.errorRed : AppColors.primaryGold,
-                      foregroundColor: isDanger ? AppColors.textWhite : AppColors.primaryBlack,
+                      backgroundColor: ThemeColors.primaryButtonBg(context, danger: isDanger),
+                      foregroundColor: ThemeColors.primaryButtonFg(context, danger: isDanger),
                       padding: const EdgeInsets.symmetric(vertical: 12),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(8),

@@ -159,7 +159,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         Text(
                           "Don't have an account?",
                           style: TextStyle(
-                            color: AppColors.textGray,
+                            color: Theme.of(context).brightness == Brightness.dark
+                                ? AppColors.textGray
+                                : AppColors.textSecondaryLight,
                             fontSize: 14,
                           ),
                         ),
@@ -182,7 +184,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     Text(
                       'Terms of Service  |  Privacy Policy',
                       style: TextStyle(
-                        color: AppColors.textDark,
+                        color: Theme.of(context).brightness == Brightness.dark
+                            ? AppColors.textDark
+                            : AppColors.textSecondaryLight,
                         fontSize: 11,
                       ),
                     ),

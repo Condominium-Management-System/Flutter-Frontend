@@ -28,6 +28,8 @@ class EmailField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
     return TextFormField(
       controller: controller,
       initialValue: controller == null ? initialValue : null,
@@ -38,14 +40,16 @@ class EmailField extends StatelessWidget {
       onChanged: onChanged,
       validator: validator ?? (value) => EmailValidator.validate(value),
       style: TextStyle(
-        color: enabled ? AppColors.textWhite : AppColors.textDark,
+        color: enabled
+            ? (isDark ? AppColors.textWhite : AppColors.textPrimaryLight)
+            : AppColors.textSecondaryLight,
         fontSize: 16,
       ),
       decoration: InputDecoration(
         labelText: label ?? 'Email Address',
         hintText: hintText ?? 'Enter your email address',
         hintStyle: TextStyle(
-          color: AppColors.textDark,
+          color: isDark ? AppColors.textDark : AppColors.textSecondaryLight,
           fontSize: 16,
         ),
         prefixIcon: Icon(
@@ -81,7 +85,9 @@ class EmailField extends StatelessWidget {
           ),
         ),
         filled: true,
-        fillColor: enabled ? AppColors.inputBackground : AppColors.secondaryBlack,
+        fillColor: enabled
+            ? (isDark ? AppColors.inputBackground : AppColors.inputBackgroundLight)
+            : AppColors.secondaryLight,
         contentPadding: const EdgeInsets.symmetric(
           horizontal: 16,
           vertical: 16,
