@@ -53,12 +53,8 @@ lib/features/resident/screens/neighbors
 lib/features/resident/screens/screens_export.dart
 
 lib/features/resident/widgets/chat
-lib/features/resident/widgets/dashboard
 lib/features/resident/widgets/chat
 lib/features/resident/widgets/widgets_export.dart
-# lib/features/resident/config/resident_theme.dart
-# lib/features/resident/config/resident_routes.dart
-# lib/features/resident/config/resident_dependencies.dart
 
 
 
