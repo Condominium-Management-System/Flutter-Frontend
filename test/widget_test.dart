@@ -13,7 +13,8 @@ import 'package:home_axis/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+    // Pass null as dynamic to satisfy the non-nullable parameter in tests.
+    await tester.pumpWidget( MyApp(themeCubit: (null as dynamic)));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);

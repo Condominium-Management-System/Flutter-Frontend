@@ -7,6 +7,7 @@ import '../storage/shared_prefs.dart';
 import '../services/auth_service.dart';
 import '../services/token_service.dart';
 import '../services/connectivity_service.dart';
+import '../services/theme_service.dart';
 import '../services/validation_service.dart';
 
 // IMPORT SERVICES (API)
@@ -35,6 +36,7 @@ Future<void> setupServiceLocator() async {
   // CORE SERVICES
   getIt.registerLazySingleton<AuthService>(() => AuthService());
   getIt.registerLazySingleton<TokenService>(() => TokenService());
+  getIt.registerLazySingleton<ThemeService>(() => ThemeService());
   getIt.registerLazySingleton<ConnectivityService>(() => ConnectivityService());
   getIt.registerLazySingleton<ValidationService>(() => ValidationService());
 

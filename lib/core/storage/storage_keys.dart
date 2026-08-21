@@ -1,2 +1,2 @@
 
-export '../constants/storage_consatnt.dart';
+export '../constants/storage_constant.dart';

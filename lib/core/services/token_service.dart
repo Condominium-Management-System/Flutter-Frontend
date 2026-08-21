@@ -4,7 +4,7 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import '../storage/secure_storage.dart';
-import '../constants/storage_consatnt.dart';
+import '../constants/storage_constant.dart';
 import '../di/service_locator.dart';
 import '../../features/auth/repositories/auth_repository.dart';
 
@@ -29,8 +29,8 @@ class TokenService {
     await SecureStorage.delete(StorageKeys.refreshToken);
   }
   
-  bool isTokenExpired() {
-    final token = getAccessTokenSync();
+  Future<bool> isTokenExpired() async {
+    final token = await getAccessToken();
     if (token == null) return true;
     
     try {
@@ -51,15 +51,15 @@ class TokenService {
     }
   }
   
-  String? getAccessTokenSync() {
-    // This is a synchronous version for use in interceptors
-    // In real implementation, you'd need to handle this differently
-    return null;
-  }
-  
-  bool refreshToken() {
-    // This is a synchronous version for use in interceptors
-    // In real implementation, you'd need to handle this differently
-    return false;
+  Future<bool> refreshToken() async {
+    final refresh = await getRefreshToken();
+    if (refresh == null || refresh.isEmpty) return false;
+    try {
+      final authRepo = getIt<AuthRepository>();
+      final newToken = await authRepo.refreshToken(refresh);
+      return newToken != null;
+    } catch (_) {
+      return false;
+    }
   }
 }

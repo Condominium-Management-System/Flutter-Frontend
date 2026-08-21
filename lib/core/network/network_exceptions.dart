@@ -25,6 +25,13 @@ class NetworkExceptions {
     if (response == null) {
       return 'Something went wrong. Please try again.';
     }
+
+    if (response.data is Map<String, dynamic>) {
+      final msg = (response.data as Map<String, dynamic>)['message'] as String?;
+      if (msg != null && msg.isNotEmpty) {
+        return msg;
+      }
+    }
     
     final statusCode = response.statusCode ?? 500;
     

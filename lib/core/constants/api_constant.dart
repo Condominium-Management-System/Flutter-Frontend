@@ -1,7 +1,9 @@
 
 class ApiConstants {
-  // Base URL
-  static const String baseUrl = 'https://homeaxis-cms.onrender.com/api';
+  static const String baseUrl = String.fromEnvironment(
+    'API_BASE_URL',
+    defaultValue: 'https://backend-a3xi.onrender.com/api',
+  );
   
   // Auth Endpoints
   static const String authRegister = '/auth/register';
@@ -11,6 +13,19 @@ class ApiConstants {
   static const String authResetPassword = '/auth/reset-password';
   static const String authLogout = '/auth/logout';
   static const String authMe = '/auth/me';
+
+  // Resident & Feature Endpoints
+  static const String announcements = '/announcements';
+  static const String payments = '/payments/';
+  static const String transactions = '/transactions/my';
+  static const String reports = '/reports';
+  static const String users = '/users';
+  static const String equb = '/equbs';
+  static const String iddir = '/iddirs';
+  static const String lostFound = '/lost-found';
+  static const String chat = '/chat';
+  static const String notifications = '/notifications';
+  static const String dashboard = '/dashboard';
   
   // Headers
   static const String authorization = 'Authorization';
