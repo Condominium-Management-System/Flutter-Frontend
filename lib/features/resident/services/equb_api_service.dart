@@ -1,23 +1,24 @@
 
 import 'package:dio/dio.dart';
 import '../../../core/network/dio_client.dart';
+import '../../../core/constants/api_constant.dart';
 
 class EqubApiService {
   final Dio _dio = DioClient.instance;
 
   // Get my Equb groups
   Future<Response> getMyEqubGroups() async {
-    return await _dio.get('/resident/equb');
+    return await _dio.get(ApiConstants.equb);
   }
 
   // Get Equb details
   Future<Response> getEqubDetails(String id) async {
-    return await _dio.get('/resident/equb/$id');
+    return await _dio.get('${ApiConstants.equb}/$id');
   }
 
   // Join Equb
   Future<Response> joinEqub(String id) async {
-    return await _dio.post('/resident/equb/$id/join');
+    return await _dio.post('${ApiConstants.equb}/$id/join');
   }
 
   // Make Equb contribution
@@ -40,7 +41,7 @@ class EqubApiService {
       );
     }
     return await _dio.post(
-      '/resident/equb/$equbId/contribute',
+      '${ApiConstants.equb}/$equbId/contribute',
       data: formData,
       options: Options(
         headers: {

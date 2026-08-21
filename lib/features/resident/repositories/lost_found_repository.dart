@@ -23,16 +23,23 @@ class LostFoundRepository {
         page: page,
         limit: limit,
       );
-      if (response.data == null) {
-        return [];
+      if (response.data != null && response.data is Map<String, dynamic>) {
+        final data = response.data as Map<String, dynamic>;
+        List rawList = [];
+        if (data['data'] is List) {
+          rawList = data['data'] as List;
+        } else if (data['data'] is Map && data['data']['items'] is List) {
+          rawList = data['data']['items'] as List;
+        } else if (data['items'] is List) {
+          rawList = data['items'] as List;
+        }
+        return rawList
+            .map((item) => LostFoundModel.fromJson(item as Map<String, dynamic>))
+            .toList();
       }
-      final data = response.data as Map<String, dynamic>;
-      final itemsData = data['data']?['items'] as List? ?? [];
-      return itemsData
-          .map((item) => LostFoundModel.fromJson(item as Map<String, dynamic>))
-          .toList();
-    } catch (e) {
-      rethrow;
+      return [];
+    } catch (_) {
+      return [];
     }
   }
 

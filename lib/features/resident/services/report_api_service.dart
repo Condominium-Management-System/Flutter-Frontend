@@ -1,6 +1,7 @@
 
 import 'package:dio/dio.dart';
 import '../../../core/network/dio_client.dart';
+import '../../../core/constants/api_constant.dart';
 
 class ReportApiService {
   final Dio _dio = DioClient.instance;
@@ -18,14 +19,14 @@ class ReportApiService {
     query['page'] = page;
     query['limit'] = limit;
     return await _dio.get(
-      '/resident/reports',
+      ApiConstants.reports,
       queryParameters: query,
     );
   }
 
   // Get report details
   Future<Response> getReportDetails(String id) async {
-    return await _dio.get('/resident/reports/$id');
+    return await _dio.get('${ApiConstants.reports}/$id');
   }
 
   // Create report
@@ -50,7 +51,7 @@ class ReportApiService {
       );
     }
     return await _dio.post(
-      '/resident/reports',
+      ApiConstants.reports,
       data: formData,
       options: Options(
         headers: {

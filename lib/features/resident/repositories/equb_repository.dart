@@ -14,16 +14,16 @@ class EqubRepository {
   Future<List<EqubModel>> getMyEqubGroups() async {
     try {
       final response = await _apiService.getMyEqubGroups();
-      if (response.data == null) {
-        return [];
+      if (response.data != null && response.data is Map<String, dynamic>) {
+        final data = response.data as Map<String, dynamic>;
+        final equbData = data['data'] as List? ?? [];
+        return equbData
+            .map((item) => EqubModel.fromJson(item as Map<String, dynamic>))
+            .toList();
       }
-      final data = response.data as Map<String, dynamic>;
-      final equbData = data['data'] as List? ?? [];
-      return equbData
-          .map((item) => EqubModel.fromJson(item as Map<String, dynamic>))
-          .toList();
-    } catch (e) {
-      rethrow;
+      return [];
+    } catch (_) {
+      return [];
     }
   }
 

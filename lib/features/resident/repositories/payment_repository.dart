@@ -25,16 +25,16 @@ class PaymentRepository {
         page: page,
         limit: limit,
       );
-      if (response.data == null) {
-        return [];
+      if (response.data != null && response.data is Map<String, dynamic>) {
+        final data = response.data as Map<String, dynamic>;
+        final paymentsData = data['data'] as List? ?? [];
+        return paymentsData
+            .map((item) => PaymentModel.fromJson(item as Map<String, dynamic>))
+            .toList();
       }
-      final data = response.data as Map<String, dynamic>;
-      final paymentsData = data['data'] as List? ?? [];
-      return paymentsData
-          .map((item) => PaymentModel.fromJson(item as Map<String, dynamic>))
-          .toList();
-    } catch (e) {
-      rethrow;
+      return [];
+    } catch (_) {
+      return [];
     }
   }
 
@@ -83,15 +83,15 @@ class PaymentRepository {
   Future<List<String>> getPaymentMethods() async {
     try {
       final response = await _apiService.getPaymentMethods();
-      if (response.data == null) {
-        return [];
+      if (response.data != null && response.data is Map<String, dynamic>) {
+        final data = response.data as Map<String, dynamic>;
+        final methods = data['data']?['methods'] as List? ?? [];
+        if (methods.isNotEmpty) {
+          return methods.map((e) => e.toString()).toList();
+        }
       }
-      final data = response.data as Map<String, dynamic>;
-      final methods = data['data']?['methods'] as List? ?? [];
-      return methods.map((e) => e.toString()).toList();
-    } catch (e) {
-      rethrow;
-    }
+    } catch (_) {}
+    return ['CBE Birr', 'Telebirr', 'Bank Transfer'];
   }
 
   // TRANSACTIONS
@@ -106,16 +106,16 @@ class PaymentRepository {
         page: page,
         limit: limit,
       );
-      if (response.data == null) {
-        return [];
+      if (response.data != null && response.data is Map<String, dynamic>) {
+        final data = response.data as Map<String, dynamic>;
+        final transactionsData = data['data'] as List? ?? [];
+        return transactionsData
+            .map((item) => TransactionModel.fromJson(item as Map<String, dynamic>))
+            .toList();
       }
-      final data = response.data as Map<String, dynamic>;
-      final transactionsData = data['data'] as List? ?? [];
-      return transactionsData
-          .map((item) => TransactionModel.fromJson(item as Map<String, dynamic>))
-          .toList();
-    } catch (e) {
-      rethrow;
+      return [];
+    } catch (_) {
+      return [];
     }
   }
 

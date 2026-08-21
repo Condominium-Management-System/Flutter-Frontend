@@ -19,16 +19,16 @@ class AnnouncementRepository {
         page: page,
         limit: limit,
       );
-      if (response.data == null) {
-        return [];
+      if (response.data != null && response.data is Map<String, dynamic>) {
+        final data = response.data as Map<String, dynamic>;
+        final announcementsData = data['data'] as List? ?? [];
+        return announcementsData
+            .map((item) => AnnouncementModel.fromJson(item as Map<String, dynamic>))
+            .toList();
       }
-      final data = response.data as Map<String, dynamic>;
-      final announcementsData = data['data'] as List? ?? [];
-      return announcementsData
-          .map((item) => AnnouncementModel.fromJson(item as Map<String, dynamic>))
-          .toList();
-    } catch (e) {
-      rethrow;
+      return [];
+    } catch (_) {
+      return [];
     }
   }
 

@@ -1,6 +1,7 @@
 
 import 'package:dio/dio.dart';
 import '../../../core/network/dio_client.dart';
+import '../../../core/constants/api_constant.dart';
 
 class AnnouncementApiService {
   final Dio _dio = DioClient.instance;
@@ -18,13 +19,13 @@ class AnnouncementApiService {
     query['page'] = page;
     query['limit'] = limit;
     return await _dio.get(
-      '/resident/announcements',
+      ApiConstants.announcements,
       queryParameters: query,
     );
   }
 
   // Get announcement details
   Future<Response> getAnnouncementDetails(String id) async {
-    return await _dio.get('/resident/announcements/$id');
+    return await _dio.get('${ApiConstants.announcements}/$id');
   }
 }

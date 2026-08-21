@@ -1,6 +1,7 @@
 
 import 'package:dio/dio.dart';
 import '../../../core/network/dio_client.dart';
+import '../../../core/constants/api_constant.dart';
 
 class NeighborApiService {
   final Dio _dio = DioClient.instance;
@@ -10,13 +11,13 @@ class NeighborApiService {
     final query = <String, dynamic>{};
     if (search != null) query['search'] = search;
     return await _dio.get(
-      '/resident/neighbors',
+      ApiConstants.users,
       queryParameters: query,
     );
   }
 
   // Get neighbor details
   Future<Response> getNeighborDetails(String id) async {
-    return await _dio.get('/resident/neighbors/$id');
+    return await _dio.get('${ApiConstants.users}/$id');
   }
 }

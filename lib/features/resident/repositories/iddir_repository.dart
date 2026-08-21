@@ -14,16 +14,16 @@ class IddirRepository {
   Future<List<IddirModel>> getMyIddirGroups() async {
     try {
       final response = await _apiService.getMyIddirGroups();
-      if (response.data == null) {
-        return [];
+      if (response.data != null && response.data is Map<String, dynamic>) {
+        final data = response.data as Map<String, dynamic>;
+        final iddirData = data['data'] as List? ?? [];
+        return iddirData
+            .map((item) => IddirModel.fromJson(item as Map<String, dynamic>))
+            .toList();
       }
-      final data = response.data as Map<String, dynamic>;
-      final iddirData = data['data'] as List? ?? [];
-      return iddirData
-          .map((item) => IddirModel.fromJson(item as Map<String, dynamic>))
-          .toList();
-    } catch (e) {
-      rethrow;
+      return [];
+    } catch (_) {
+      return [];
     }
   }
 

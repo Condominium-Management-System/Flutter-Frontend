@@ -1,6 +1,7 @@
 
 import 'package:dio/dio.dart';
 import '../../../core/network/dio_client.dart';
+import '../../../core/constants/api_constant.dart';
 
 class PaymentApiService {
   final Dio _dio = DioClient.instance;
@@ -20,14 +21,14 @@ class PaymentApiService {
     query['page'] = page;
     query['limit'] = limit;
     return await _dio.get(
-      '/resident/payments',
+      ApiConstants.payments,
       queryParameters: query,
     );
   }
 
   // Get payment details
   Future<Response> getPaymentDetails(String id) async {
-    return await _dio.get('/resident/payments/$id');
+    return await _dio.get('${ApiConstants.payments}/$id');
   }
 
   // Make payment (manual)
@@ -56,7 +57,7 @@ class PaymentApiService {
       );
     }
     return await _dio.post(
-      '/resident/payments',
+      ApiConstants.payments,
       data: formData,
       options: Options(
         headers: {
@@ -68,7 +69,7 @@ class PaymentApiService {
 
   // Get payment methods
   Future<Response> getPaymentMethods() async {
-    return await _dio.get('/payments/methods');
+    return await _dio.get('${ApiConstants.payments}/methods');
   }
 
   // Get my transactions
@@ -82,7 +83,7 @@ class PaymentApiService {
     query['page'] = page;
     query['limit'] = limit;
     return await _dio.get(
-      '/payments/my-transactions',
+      ApiConstants.transactions,
       queryParameters: query,
     );
   }
@@ -90,7 +91,7 @@ class PaymentApiService {
   // Get payment receipt (PDF)
   Future<Response> getReceiptPdf(String id) async {
     return await _dio.get(
-      '/payments/$id/receipt/pdf',
+      '${ApiConstants.payments}/$id/receipt/pdf',
       options: Options(
         responseType: ResponseType.bytes,
       ),

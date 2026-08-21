@@ -1,23 +1,24 @@
 
 import 'package:dio/dio.dart';
 import '../../../core/network/dio_client.dart';
+import '../../../core/constants/api_constant.dart';
 
 class IddirApiService {
   final Dio _dio = DioClient.instance;
 
   // Get my Iddir groups
   Future<Response> getMyIddirGroups() async {
-    return await _dio.get('/resident/iddir');
+    return await _dio.get(ApiConstants.iddir);
   }
 
   // Get Iddir details
   Future<Response> getIddirDetails(String id) async {
-    return await _dio.get('/resident/iddir/$id');
+    return await _dio.get('${ApiConstants.iddir}/$id');
   }
 
   // Join Iddir
   Future<Response> joinIddir(String id) async {
-    return await _dio.post('/resident/iddir/$id/join');
+    return await _dio.post('${ApiConstants.iddir}/$id/join');
   }
 
   // Make Iddir contribution
@@ -40,7 +41,7 @@ class IddirApiService {
       );
     }
     return await _dio.post(
-      '/resident/iddir/$iddirId/contribute',
+      '${ApiConstants.iddir}/$iddirId/contribute',
       data: formData,
       options: Options(
         headers: {

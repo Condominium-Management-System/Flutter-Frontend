@@ -10,16 +10,16 @@ class ChatRepository {
   Future<List<ChatModel>> getChatList() async {
     try {
       final response = await _apiService.getChatList();
-      if (response.data == null) {
-        return [];
+      if (response.data != null && response.data is Map<String, dynamic>) {
+        final data = response.data as Map<String, dynamic>;
+        final chatData = data['data'] as List? ?? [];
+        return chatData
+            .map((item) => ChatModel.fromJson(item as Map<String, dynamic>))
+            .toList();
       }
-      final data = response.data as Map<String, dynamic>;
-      final chatData = data['data'] as List? ?? [];
-      return chatData
-          .map((item) => ChatModel.fromJson(item as Map<String, dynamic>))
-          .toList();
-    } catch (e) {
-      rethrow;
+      return [];
+    } catch (_) {
+      return [];
     }
   }
 
@@ -72,13 +72,11 @@ class ChatRepository {
   Future<int> getUnreadCount() async {
     try {
       final response = await _apiService.getUnreadCount();
-      if (response.data == null) {
-        return 0;
+      if (response.data != null && response.data is Map<String, dynamic>) {
+        final data = response.data as Map<String, dynamic>;
+        return data['data']?['count'] as int? ?? 0;
       }
-      final data = response.data as Map<String, dynamic>;
-      return data['data']?['count'] as int? ?? 0;
-    } catch (e) {
-      rethrow;
-    }
+    } catch (_) {}
+    return 0;
   }
 }

@@ -1,6 +1,7 @@
 
 import 'package:dio/dio.dart';
 import '../../../core/network/dio_client.dart';
+import '../../../core/constants/api_constant.dart';
 
 class LostFoundApiService {
   final Dio _dio = DioClient.instance;
@@ -22,14 +23,14 @@ class LostFoundApiService {
     query['page'] = page;
     query['limit'] = limit;
     return await _dio.get(
-      '/resident/lost-found',
+      ApiConstants.lostFound,
       queryParameters: query,
     );
   }
 
   // Get item details
   Future<Response> getItemDetails(String id) async {
-    return await _dio.get('/resident/lost-found/$id');
+    return await _dio.get('${ApiConstants.lostFound}/$id');
   }
 
   // Create lost item
@@ -57,7 +58,7 @@ class LostFoundApiService {
       );
     }
     return await _dio.post(
-      '/resident/lost-found',
+      ApiConstants.lostFound,
       data: formData,
       options: Options(
         headers: {
@@ -92,7 +93,7 @@ class LostFoundApiService {
       );
     }
     return await _dio.post(
-      '/resident/lost-found',
+      ApiConstants.lostFound,
       data: formData,
       options: Options(
         headers: {
@@ -105,13 +106,13 @@ class LostFoundApiService {
   // Claim item
   Future<Response> claimItem(String id, {required String claimDescription}) async {
     return await _dio.post(
-      '/resident/lost-found/$id/claim',
+      '${ApiConstants.lostFound}/$id/claim',
       data: {'claimDescription': claimDescription},
     );
   }
 
   // Get my items
   Future<Response> getMyItems() async {
-    return await _dio.get('/resident/lost-found/my-items');
+    return await _dio.get('${ApiConstants.lostFound}/my-items');
   }
 }
